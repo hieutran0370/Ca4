@@ -1,22 +1,20 @@
 var express = require('express');
+var expressHbs = require('express-handlebars')
 var app = express();
-var expressHBS = require('express-handlebars');
+app.listen(process.env.PORT || '3001');
+app.engine('handlebars', expressHbs({
+    layoutsDir: __dirname + '/views/layouts',
+    // layout cha mặc định
+    defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
+app.get('/', function (request,
+                       response) {
+    console.log('ABABABABABABABAB')
+    response.render('abc');
+})
 
-
-app.engine('handlebars',expressHBS(
-    {
-        layoutsDir:__dirname+'/views/layouts',
-        defaultLayout: 'main'
-    }
-));
-app.set('view engine','handlebars')
-app.get('/',function (request,response){
-    var data = "ABCABCABCABCABC";
-    var arr = [4,5,67,8,9,12,3,4,5];
-    response.render('home',{title:data,array:arr});
-});
-app.post('/',function (request,response) {
-
-});
-app.listen(process.env.PORT || '5000')
+app.get('/home', function (request, response) {
+    response.send('Homemmmm');
+})
